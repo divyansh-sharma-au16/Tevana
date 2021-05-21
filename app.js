@@ -10,6 +10,6 @@ app.use(express.static('./public'));
 // Routes
 
 app.use('/api/v1/gardens', gardenRouter);
-app.use('api/v1/users', userRouter);
+app.use('/api/v1/users', userRouter);
 
 module.exports = app;
