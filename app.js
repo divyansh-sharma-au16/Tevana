@@ -37,7 +37,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use(helmet());
 
 app.use(helmet());
-
 csp.extend(app, {
   policy: {
     directives: {
@@ -50,6 +49,8 @@ csp.extend(app, {
         'data',
         'blob',
         'https://js.stripe.com',
+        'https://*.mapbox.com',
+        'https://*.cloudflare.com/',
         'https://bundle.js:8828',
         'ws://localhost:56558/',
       ],
@@ -70,6 +71,8 @@ csp.extend(app, {
         'data:',
         'blob:',
         'https://*.stripe.com',
+        'https://*.mapbox.com',
+        'https://*.cloudflare.com/',
         'https://bundle.js:*',
         'ws://localhost:*/',
       ],
@@ -79,6 +82,8 @@ csp.extend(app, {
         'data:',
         'blob:',
         'https://*.stripe.com',
+        'https://*.mapbox.com',
+        'https://*.cloudflare.com/',
         'https://bundle.js:*',
         'ws://localhost:*/',
       ],
@@ -87,8 +92,10 @@ csp.extend(app, {
         'unsafe-inline',
         'data:',
         'blob:',
-        // 'wss://<HEROKU-SUBDOMAIN>.herokuapp.com:<PORT>/',
+        'wss://https://blooming-peak-67620.herokuapp.com/',
         'https://*.stripe.com',
+        'https://*.mapbox.com',
+        'https://*.cloudflare.com/',
         'https://bundle.js:*',
         'ws://localhost:*/',
       ],
