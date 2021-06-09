@@ -55,13 +55,13 @@ app.use((req, res, next) => {
 });
 
 // eslint-disable-next-line prefer-arrow-callback
-app.use(function (req, res, next) {
-  res.setHeader(
-    'Content-Security-Policy',
-    "script-src 'self' https://cdnjs.cloudflare.com"
-  );
-  next();
-});
+// app.use(function (req, res, next) {
+//   res.setHeader(
+//     'Content-Security-Policy',
+//     "script-src 'self' https://cdnjs.cloudflare.com"
+//   );
+//   next();
+// });
 
 //limit request
 const limiter = rateLimit({
