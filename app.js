@@ -9,6 +9,7 @@ const hpp = require('hpp');
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
 const stripe = require('stripe');
+const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/globalErrorHndler');
@@ -18,13 +19,25 @@ const bookingRouter = require('./routes/bookingRoute');
 const viewRouter = require('./routes/viewRoute');
 
 const app = express();
+app.enable('trust proxy');
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
+app.use(cors());
+
+app.options('*', cors());
+
+//serving static files
+app.use(express.static(path.join(__dirname, 'public')));
+
 //global middlewares
 //set security HTTP
 app.use(helmet());
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
 app.use(compression());
 
@@ -50,10 +63,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-}
-
 //limit request
 const limiter = rateLimit({
   max: 100,
@@ -69,8 +78,6 @@ app.use(mongoSanitize());
 app.use(xss());
 
 app.use(hpp());
-//serving static files
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes
 app.use('/', viewRouter);
